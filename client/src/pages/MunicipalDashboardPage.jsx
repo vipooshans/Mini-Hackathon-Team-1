@@ -45,6 +45,7 @@ function MunicipalDashboardPage() {
   const [fetchStatus, setFetchStatus] = useState("loading");
   const [updatingId, setUpdatingId] = useState(null);
   const [actionError, setActionError] = useState("");
+  const [selectedReport, setSelectedReport] = useState(null);
 
   const loadReports = async () => {
     try {
@@ -60,6 +61,15 @@ function MunicipalDashboardPage() {
     if (!token) return;
     loadReports();
   }, [token]);
+
+  useEffect(() => {
+    if (!selectedReport) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setSelectedReport(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedReport]);
 
   const metrics = useMemo(() => computeMetrics(reports), [reports]);
 
@@ -98,12 +108,17 @@ function MunicipalDashboardPage() {
       setReports((prev) =>
         prev.map((r) => (r._id === updated._id ? updated : r))
       );
+      setSelectedReport((prev) =>
+        prev && prev._id === updated._id ? updated : prev
+      );
     } catch (err) {
       setActionError(err.message || "Failed to update status.");
     } finally {
       setUpdatingId(null);
     }
   };
+
+  const closeDetails = () => setSelectedReport(null);
 
   return (
     <>
@@ -208,6 +223,13 @@ function MunicipalDashboardPage() {
                 )}
 
                 <div className="dashboard-card-actions">
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => setSelectedReport(report)}
+                  >
+                    Details
+                  </button>
                   {report.status === "Pending" && (
                     <button
                       type="button"
@@ -244,6 +266,132 @@ function MunicipalDashboardPage() {
         )}
       </div>
     </main>
+
+      {selectedReport && (
+        <div
+          className="report-detail-overlay"
+          role="presentation"
+          onClick={closeDetails}
+        >
+          <div
+            className="report-detail-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="report-detail-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="report-detail-modal__header">
+              <div>
+                <span
+                  className={`badge ${getStatusBadgeClass(selectedReport.status)}`}
+                >
+                  {selectedReport.status}
+                </span>
+                <h2 id="report-detail-title" className="report-detail-modal__title">
+                  {selectedReport.wasteType}
+                </h2>
+              </div>
+              <button
+                type="button"
+                className="report-detail-modal__close"
+                aria-label="Close details"
+                onClick={closeDetails}
+              >
+                ×
+              </button>
+            </div>
+
+            <dl className="report-detail-modal__meta">
+              <div>
+                <dt>District</dt>
+                <dd>{selectedReport.district}</dd>
+              </div>
+              <div>
+                <dt>Submitted</dt>
+                <dd>
+                  {new Date(selectedReport.date).toLocaleString()}
+                </dd>
+              </div>
+              {selectedReport.location?.address && (
+                <div>
+                  <dt>Address</dt>
+                  <dd>{selectedReport.location.address}</dd>
+                </div>
+              )}
+              {selectedReport.location?.lat != null &&
+                selectedReport.location?.lng != null && (
+                  <div>
+                    <dt>Coordinates</dt>
+                    <dd>
+                      {selectedReport.location.lat.toFixed(5)},{" "}
+                      {selectedReport.location.lng.toFixed(5)}
+                    </dd>
+                  </div>
+                )}
+            </dl>
+
+            <div className="report-detail-modal__section">
+              <h3>Description</h3>
+              <p>{selectedReport.description || "No description provided."}</p>
+            </div>
+
+            {selectedReport.images && selectedReport.images.length > 0 && (
+              <div className="report-detail-modal__section">
+                <h3>Evidence</h3>
+                <div className="report-detail-modal__images">
+                  {selectedReport.images.map((img, i) => (
+                    <a
+                      key={i}
+                      href={img}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="report-detail-modal__image"
+                    >
+                      <img src={img} alt={`Report evidence ${i + 1}`} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="dashboard-card-actions">
+              {selectedReport.status === "Pending" && (
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  disabled={updatingId === selectedReport._id}
+                  onClick={() =>
+                    handleStatusUpdate(selectedReport._id, "Acknowledged")
+                  }
+                >
+                  {updatingId === selectedReport._id
+                    ? "Updating…"
+                    : "Acknowledge"}
+                </button>
+              )}
+              {selectedReport.status !== "Resolved" && (
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  disabled={updatingId === selectedReport._id}
+                  onClick={() =>
+                    handleStatusUpdate(selectedReport._id, "Resolved")
+                  }
+                >
+                  {updatingId === selectedReport._id ? "Updating…" : "Resolve"}
+                </button>
+              )}
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={closeDetails}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

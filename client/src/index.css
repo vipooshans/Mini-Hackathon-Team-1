@@ -1682,6 +1682,129 @@ button {
   font-weight: 600;
 }
 
+.report-detail-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(14, 31, 26, 0.45);
+}
+
+.report-detail-modal {
+  width: min(36rem, 100%);
+  max-height: min(90vh, 40rem);
+  overflow: auto;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  padding: 1.25rem 1.35rem 1.4rem;
+  box-shadow: 0 18px 48px rgba(14, 31, 26, 0.18);
+}
+
+.report-detail-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.report-detail-modal__title {
+  margin: 0.55rem 0 0;
+  font-family: "Fraunces", serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--brand);
+  line-height: 1.2;
+}
+
+.report-detail-modal__close {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.report-detail-modal__close:hover {
+  border-color: var(--brand-mid);
+  color: var(--brand);
+}
+
+.report-detail-modal__meta {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 1.15rem;
+}
+
+.report-detail-modal__meta > div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.report-detail-modal__meta dt {
+  font-size: 0.75rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.report-detail-modal__meta dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.report-detail-modal__section {
+  margin-bottom: 1.15rem;
+}
+
+.report-detail-modal__section h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.report-detail-modal__section p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.report-detail-modal__images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.report-detail-modal__image {
+  display: block;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.report-detail-modal__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ——— Feature pages (schedule, guide, profile, recycler) ——— */
 .feature-page {
   padding-top: 0;
