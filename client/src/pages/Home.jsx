@@ -61,7 +61,7 @@ function Home() {
                 Open dashboard
               </Link>
             ) : user?.role === "recycler" ? (
-              <Link className="btn btn-primary" to="/recycler">
+              <Link className="btn btn-primary" to="/recycler/center">
                 Open recycling center
               </Link>
             ) : (
@@ -69,9 +69,9 @@ function Home() {
                 Start a report
               </Link>
             )}
-            <a className="btn btn-ghost" href="#features">
-              See how it works
-            </a>
+            <Link className="btn btn-ghost" to="/recycling-guide">
+              Recycling guide
+            </Link>
           </div>
         </div>
       </section>

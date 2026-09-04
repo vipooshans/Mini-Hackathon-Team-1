@@ -26,13 +26,19 @@ function Header() {
       <Link to="/schedule" onClick={close}>
         Schedule
       </Link>
-      <Link to="/guide" onClick={close}>
+      <Link to="/recycling-guide" onClick={close}>
         Recycling Guide
       </Link>
       {user && (
         <>
           <Link to="/my-reports" onClick={close}>
             My Reports
+          </Link>
+          <Link to="/recycling-centers" onClick={close}>
+            Centers
+          </Link>
+          <Link to="/saved" onClick={close}>
+            Saved
           </Link>
           <Link to="/recycler" onClick={close}>
             Pickup
@@ -46,15 +52,25 @@ function Header() {
   );
 
   const municipalityLinks = (
-    <Link to="/dashboard" onClick={close}>
-      Admin Dashboard
-    </Link>
+    <>
+      <Link to="/dashboard" onClick={close}>
+        Issue Dashboard
+      </Link>
+      <Link to="/admin/recycling-dashboard" onClick={close}>
+        Recycling Admin
+      </Link>
+    </>
   );
 
   const recyclerLinks = (
-    <Link to="/recycler" onClick={close}>
-      Recycling Center
-    </Link>
+    <>
+      <Link to="/recycler" onClick={close}>
+        Pickups
+      </Link>
+      <Link to="/recycler/center" onClick={close}>
+        Center Profile
+      </Link>
+    </>
   );
 
   return (
@@ -100,8 +116,11 @@ function Header() {
             <Link to="/schedule" onClick={close}>
               Schedule
             </Link>
-            <Link to="/guide" onClick={close}>
+            <Link to="/recycling-guide" onClick={close}>
               Recycling Guide
+            </Link>
+            <Link to="/recycling-centers" onClick={close}>
+              Centers
             </Link>
           </>
         )}

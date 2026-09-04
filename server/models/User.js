@@ -42,6 +42,16 @@ const userSchema = new Schema({
     trim: true,
     default: "",
   },
+  municipality: {
+    type: String,
+    trim: true,
+    default: "",
+  },
+  language: {
+    type: String,
+    enum: ["en", "si", "ta"],
+    default: "en",
+  },
   /** Collection reminder preferences (citizen) */
   reminderEnabled: {
     type: Boolean,

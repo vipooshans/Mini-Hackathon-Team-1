@@ -113,7 +113,8 @@ function MunicipalDashboardPage() {
           <div>
             <h1 className="interior-page__title">Municipal Dashboard</h1>
             <p className="dashboard-subtitle">
-              Live waste reports — acknowledge and resolve issues for your council.
+              Live waste reports — acknowledge and resolve issues for your council.{" "}
+              <Link to="/admin/recycling-dashboard">Recycling admin</Link>
             </p>
           </div>
           <button

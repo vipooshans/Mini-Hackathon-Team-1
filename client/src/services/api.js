@@ -73,6 +73,43 @@ export async function patch(path, data, token = null) {
 }
 
 /**
+ * Generic PUT request (JSON body).
+ */
+export async function put(path, data, token = null) {
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  const response = await fetch(`${API_BASE}${path}`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
+    throw new Error(body.message || `PUT ${path} failed (${response.status})`);
+  }
+  return response.json();
+}
+
+/**
+ * Generic DELETE request.
+ */
+export async function del(path, token = null) {
+  const headers = {};
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  const response = await fetch(`${API_BASE}${path}`, {
+    method: "DELETE",
+    headers,
+  });
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
+    throw new Error(body.message || `DELETE ${path} failed (${response.status})`);
+  }
+  return response.json();
+}
+
+/**
  * POST request with FormData (for file uploads).
  * Do NOT set Content-Type — the browser adds the correct multipart boundary.
  * @param {string} path — e.g. "/reports"
