@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Header from "../components/Header.jsx";
+import MunicipalityAdminSubnav from "../components/MunicipalityAdminSubnav.jsx";
 import DynamicStringList from "../components/recycling/DynamicStringList.jsx";
 import {
   createRecyclerCenter,
@@ -8,6 +9,7 @@ import {
   updateRecyclerCenter,
 } from "../services/recyclingCenterService.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import { isMunicipalityAdmin } from "../utils/roles.js";
 import { CENTER_TYPES, WASTE_CATEGORIES } from "../utils/recyclingUtils.js";
 import { DISTRICTS } from "../data/districts.js";
 
@@ -49,7 +51,38 @@ function RecyclerCenterPage() {
   }, [token]);
 
   if (authLoading) return null;
-  if (!user || user.role !== "recycler") return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/login" replace />;
+
+  if (isMunicipalityAdmin(user)) {
+    return (
+      <>
+        <Header />
+        <main className="interior-page dashboard-page">
+          <div className="interior-page__inner">
+            <h1 className="interior-page__title">Municipal Dashboard</h1>
+            <p className="dashboard-subtitle">
+              Center profiles are managed by recyclers. Verify and administer
+              centres from your municipality tools below.
+            </p>
+            <MunicipalityAdminSubnav />
+            <div className="dashboard-card-actions">
+              <Link className="btn btn-primary btn-sm" to="/dashboard">
+                Open Issue Dashboard
+              </Link>
+              <Link
+                className="btn btn-ghost btn-sm"
+                to="/admin/recycling-centers"
+              >
+                Manage Recycling Centers
+              </Link>
+            </div>
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  if (user.role !== "recycler") return <Navigate to="/login" replace />;
 
   const set = (key, val) => setForm((f) => ({ ...f, [key]: val }));
 

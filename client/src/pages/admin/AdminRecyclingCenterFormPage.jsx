@@ -8,6 +8,7 @@ import {
   getRecyclingCenter,
 } from "../../services/recyclingCenterService.js";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { isMunicipalityAdmin } from "../../utils/roles.js";
 import { CENTER_TYPES, WASTE_CATEGORIES } from "../../utils/recyclingUtils.js";
 import { DISTRICTS } from "../../data/districts.js";
 
@@ -60,7 +61,8 @@ function AdminRecyclingCenterFormPage() {
   }, [id, isEdit, token]);
 
   if (authLoading) return null;
-  if (!user || user.role !== "municipality") return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/login" replace />;
+  if (!isMunicipalityAdmin(user)) return <Navigate to="/dashboard" replace />;
 
   const set = (key, val) => setForm((f) => ({ ...f, [key]: val }));
 

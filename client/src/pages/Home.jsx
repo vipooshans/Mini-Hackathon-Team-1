@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import { isMunicipalityAdmin } from "../utils/roles.js";
 
 const FEATURES = [
   {
@@ -56,10 +57,15 @@ function Home() {
             Lanka cleaner—from one photo to a resolved pickup.
           </p>
           <div className="hero-actions">
-            {user?.role === "municipality" ? (
-              <Link className="btn btn-primary" to="/dashboard">
-                Open dashboard
-              </Link>
+            {isMunicipalityAdmin(user) ? (
+              <>
+                <Link className="btn btn-primary" to="/dashboard">
+                  Issue dashboard
+                </Link>
+                <Link className="btn btn-ghost" to="/admin/recycling-dashboard">
+                  Recycling dashboard
+                </Link>
+              </>
             ) : user?.role === "recycler" ? (
               <Link className="btn btn-primary" to="/recycler/center">
                 Open recycling center
@@ -69,9 +75,11 @@ function Home() {
                 Start a report
               </Link>
             )}
-            <Link className="btn btn-ghost" to="/recycling-guide">
-              Recycling guide
-            </Link>
+            {!isMunicipalityAdmin(user) && (
+              <Link className="btn btn-ghost" to="/recycling-guide">
+                Recycling guide
+              </Link>
+            )}
           </div>
         </div>
       </section>

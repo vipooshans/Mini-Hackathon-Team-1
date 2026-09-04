@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const LINKS = [
   { to: "/dashboard", label: "Issue Dashboard" },
-  { to: "/admin/recycling-dashboard", label: "Recycling Admin" },
+  { to: "/admin/recycling-dashboard", label: "Recycling Dashboard" },
   { to: "/admin/waste-guides", label: "Waste Guides" },
   { to: "/admin/recycling-centers", label: "Recycling Centers" },
   { to: "/admin/center-reports", label: "Center Reports" },

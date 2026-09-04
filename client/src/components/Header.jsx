@@ -57,7 +57,7 @@ function Header() {
         Issue Dashboard
       </Link>
       <Link to="/admin/recycling-dashboard" onClick={close}>
-        Recycling Admin
+        Recycling Dashboard
       </Link>
     </>
   );

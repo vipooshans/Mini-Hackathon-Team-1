@@ -4,6 +4,7 @@ import Header from "../components/Header.jsx";
 import MunicipalityAdminSubnav from "../components/MunicipalityAdminSubnav.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { getReports, updateReportStatus } from "../services/reportService.js";
+import { isMunicipalityAdmin } from "../utils/roles.js";
 
 function computeMetrics(reports) {
   const total = reports.length;
@@ -79,7 +80,7 @@ function MunicipalDashboardPage() {
     return <Navigate to="/login" replace />;
   }
 
-  if (user.role !== "municipality") {
+  if (!isMunicipalityAdmin(user)) {
     return (
       <>
         <Header />

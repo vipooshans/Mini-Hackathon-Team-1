@@ -4,6 +4,7 @@ import Header from "../../components/Header.jsx";
 import MunicipalityAdminSubnav from "../../components/MunicipalityAdminSubnav.jsx";
 import { getDashboardStats } from "../../services/recyclingCenterService.js";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { isMunicipalityAdmin } from "../../utils/roles.js";
 import {
   BarChart,
   Bar,
@@ -20,14 +21,15 @@ function RecyclingDashboardPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || !isMunicipalityAdmin(user)) return;
     getDashboardStats(token)
       .then((res) => setStats(res.data))
       .catch((err) => setError(err.message));
-  }, [token]);
+  }, [token, user]);
 
   if (authLoading) return null;
-  if (!user || user.role !== "municipality") return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/login" replace />;
+  if (!isMunicipalityAdmin(user)) return <Navigate to="/dashboard" replace />;
 
   const catData = (stats?.guidesByCategory || []).map((d) => ({
     name: d._id,

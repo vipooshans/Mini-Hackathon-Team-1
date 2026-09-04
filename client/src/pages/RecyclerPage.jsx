@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Header from "../components/Header.jsx";
+import MunicipalityAdminSubnav from "../components/MunicipalityAdminSubnav.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import { isMunicipalityAdmin } from "../utils/roles.js";
 import { DISTRICTS } from "../data/districts.js";
 import {
   createPickup,
@@ -67,17 +69,29 @@ function RecyclerPage() {
     return <Navigate to="/login" replace />;
   }
 
-  if (user.role === "municipality") {
+  if (isMunicipalityAdmin(user)) {
     return (
       <>
         <Header />
-        <main className="interior-page">
+        <main className="interior-page dashboard-page">
           <div className="interior-page__inner">
-            <h1 className="interior-page__title">Recycling Center</h1>
-            <p className="interior-page__copy">
-              Pickup marketplace is for citizens and recyclers.{" "}
-              <Link to="/dashboard">Open Admin Dashboard</Link>
+            <h1 className="interior-page__title">Municipal Dashboard</h1>
+            <p className="dashboard-subtitle">
+              Pickup marketplace is for citizens and recyclers. Use your
+              municipality tools below to manage issues and recycling centres.
             </p>
+            <MunicipalityAdminSubnav />
+            <div className="dashboard-card-actions">
+              <Link className="btn btn-primary btn-sm" to="/dashboard">
+                Open Issue Dashboard
+              </Link>
+              <Link
+                className="btn btn-ghost btn-sm"
+                to="/admin/recycling-dashboard"
+              >
+                Open Recycling Dashboard
+              </Link>
+            </div>
           </div>
         </main>
       </>

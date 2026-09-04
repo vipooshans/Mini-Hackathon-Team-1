@@ -8,6 +8,7 @@ import {
   adminUpdateWasteGuide,
 } from "../../services/wasteGuideService.js";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { isMunicipalityAdmin } from "../../utils/roles.js";
 import {
   WASTE_CATEGORIES,
 } from "../../utils/recyclingUtils.js";
@@ -50,7 +51,8 @@ function AdminWasteGuideFormPage() {
   }, [id, isEdit, token]);
 
   if (authLoading) return null;
-  if (!user || user.role !== "municipality") return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/login" replace />;
+  if (!isMunicipalityAdmin(user)) return <Navigate to="/dashboard" replace />;
 
   const set = (key, val) => setForm((f) => ({ ...f, [key]: val }));
 

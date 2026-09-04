@@ -8,6 +8,7 @@ import {
   adminVerifyCenter,
 } from "../../services/recyclingCenterService.js";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { isMunicipalityAdmin } from "../../utils/roles.js";
 
 function AdminRecyclingCentersPage() {
   const { user, token, loading: authLoading } = useAuth();
@@ -35,7 +36,8 @@ function AdminRecyclingCentersPage() {
   }, [token]);
 
   if (authLoading) return null;
-  if (!user || user.role !== "municipality") return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/login" replace />;
+  if (!isMunicipalityAdmin(user)) return <Navigate to="/dashboard" replace />;
 
   return (
     <>
