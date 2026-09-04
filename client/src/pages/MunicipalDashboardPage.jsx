@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Header from "../components/Header.jsx";
+import MunicipalityAdminSubnav from "../components/MunicipalityAdminSubnav.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { getReports, updateReportStatus } from "../services/reportService.js";
 
@@ -113,8 +114,7 @@ function MunicipalDashboardPage() {
           <div>
             <h1 className="interior-page__title">Municipal Dashboard</h1>
             <p className="dashboard-subtitle">
-              Live waste reports — acknowledge and resolve issues for your council.{" "}
-              <Link to="/admin/recycling-dashboard">Recycling admin</Link>
+              Live waste reports — acknowledge and resolve issues for your council.
             </p>
           </div>
           <button
@@ -126,6 +126,8 @@ function MunicipalDashboardPage() {
             Refresh
           </button>
         </div>
+
+        <MunicipalityAdminSubnav />
 
         <div className="dashboard-metrics" aria-label="Report metrics">
           <div className="dashboard-metric">

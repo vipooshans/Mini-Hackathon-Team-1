@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Header from "../../components/Header.jsx";
+import MunicipalityAdminSubnav from "../../components/MunicipalityAdminSubnav.jsx";
 import { getDashboardStats } from "../../services/recyclingCenterService.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import {
@@ -47,12 +48,7 @@ function RecyclingDashboardPage() {
       <main className="interior-page feature-page">
         <div className="interior-page__inner">
           <h1 className="interior-page__title">Recycling Dashboard</h1>
-          <nav className="admin-subnav">
-            <Link to="/admin/waste-guides">Waste Guides</Link>
-            <Link to="/admin/recycling-centers">Recycling Centers</Link>
-            <Link to="/admin/center-reports">Center Reports</Link>
-            <Link to="/dashboard">Issue Reports</Link>
-          </nav>
+          <MunicipalityAdminSubnav />
           {error && <p className="form-error">{error}</p>}
           {stats && (
             <>

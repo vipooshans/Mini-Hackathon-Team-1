@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Header from "../../components/Header.jsx";
+import MunicipalityAdminSubnav from "../../components/MunicipalityAdminSubnav.jsx";
 import {
   adminListCenters,
   adminDeleteCenter,
@@ -42,12 +43,11 @@ function AdminRecyclingCentersPage() {
       <main className="interior-page feature-page">
         <div className="interior-page__inner">
           <h1 className="interior-page__title">Recycling Centers</h1>
-          <nav className="admin-subnav">
-            <Link to="/admin/recycling-dashboard">Dashboard</Link>
+          <MunicipalityAdminSubnav>
             <Link className="btn btn-primary" to="/admin/recycling-centers/new">
               + Add Center
             </Link>
-          </nav>
+          </MunicipalityAdminSubnav>
           {error && <p className="form-error">{error}</p>}
           <div className="admin-filters">
             <input
