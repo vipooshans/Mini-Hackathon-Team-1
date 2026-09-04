@@ -56,6 +56,11 @@ function Home() {
             Lanka cleaner—from one photo to a resolved pickup.
           </p>
           <div className="hero-actions">
+<<<<<<< HEAD
+            <Link className="btn btn-primary" to="/report">
+              Start a report
+            </Link>
+=======
             {user ? (
               <a className="btn btn-primary" href="#join">
                 Continue as {user.name.split(" ")[0]}
@@ -65,6 +70,7 @@ function Home() {
                 Create free account
               </Link>
             )}
+>>>>>>> origin/vipooshan
             <a className="btn btn-ghost" href="#features">
               See how it works
             </a>

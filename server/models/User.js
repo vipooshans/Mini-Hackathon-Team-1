@@ -1,6 +1,59 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
 
+<<<<<<< HEAD
+/**
+ * User schema — authentication for CleanLanka.
+ *
+ * Fields:
+ *   name     — display name
+ *   email    — unique, used for login
+ *   password — bcrypt-hashed, never returned in queries
+ */
+const userSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6,
+    select: false, // Never return password by default
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+/**
+ * Pre-save hook — hash password before storing.
+ * Only runs if password field is modified (not on every save).
+ */
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+/**
+ * Instance method — compare a plain-text password with the stored hash.
+ */
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+=======
 const ROLES = ["citizen", "municipality", "recycler"];
 
 const userSchema = new Schema(
@@ -69,4 +122,5 @@ userSchema.methods.toSafeObject = function toSafeObject() {
 };
 
 export { ROLES };
+>>>>>>> origin/vipooshan
 export default model("User", userSchema);

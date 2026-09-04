@@ -868,3 +868,746 @@ button {
     transform: none;
   }
 }
+
+/* =============================================
+   REPORT FEATURE — styles for /report page
+   Uses the same design tokens as the landing page.
+   ============================================= */
+
+/* ——— Interior page layout (report, schedule, guide, dashboard) ——— */
+.interior-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 10%, rgba(43, 182, 115, 0.08), transparent),
+    radial-gradient(ellipse 50% 40% at 85% 90%, rgba(12, 74, 62, 0.06), transparent),
+    var(--foam);
+}
+
+.interior-page__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vh, 4rem) clamp(1.25rem, 4vw, 3rem);
+}
+
+.interior-page__title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.interior-page__copy {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+/* ——— Interior top bar — used on report (and future interior pages) ——— */
+.interior-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem clamp(1.25rem, 4vw, 3rem);
+  background: rgba(244, 250, 247, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.interior-topbar__brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.interior-topbar__brand:hover {
+  color: var(--brand-mid);
+}
+
+.interior-topbar__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.interior-topbar__back:hover {
+  color: var(--brand);
+  background: var(--mist);
+}
+
+/* ——— Report form card ——— */
+.report-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  box-shadow:
+    0 1px 3px rgba(14, 31, 26, 0.06),
+    0 8px 24px rgba(14, 31, 26, 0.04);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  animation: rise 0.6s var(--ease-out) both;
+}
+
+.report-card__header {
+  margin-bottom: 2rem;
+}
+
+.report-card__title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.15rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.report-card__subtitle {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+/* ——— Form groups ——— */
+.rf-group {
+  margin-bottom: 1.5rem;
+}
+
+.rf-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.rf-label .rf-optional {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.rf-input,
+.rf-select,
+.rf-textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.rf-input:focus,
+.rf-select:focus,
+.rf-textarea:focus {
+  border-color: var(--brand-mid);
+  box-shadow: 0 0 0 3px rgba(12, 74, 62, 0.1);
+}
+
+.rf-textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.rf-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%232a4038' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  padding-right: 2.25rem;
+}
+
+/* Error state */
+.rf-group--error .rf-input,
+.rf-group--error .rf-select,
+.rf-group--error .rf-textarea {
+  border-color: #c0392b;
+}
+
+.rf-error {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #c0392b;
+}
+
+/* ——— Geo section ——— */
+.rf-geo {
+  padding: 1rem;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, rgba(43, 182, 115, 0.06) 0%, rgba(12, 74, 62, 0.04) 100%);
+  border: 1px solid rgba(43, 182, 115, 0.18);
+  margin-bottom: 1.5rem;
+}
+
+.rf-geo__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--brand);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rf-geo__coords {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.rf-geo__coords span {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.rf-geo__msg {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: rgba(12, 74, 62, 0.06);
+  color: var(--ink-soft);
+  border: 1px solid rgba(12, 74, 62, 0.08);
+}
+
+/* ——— Report buttons ——— */
+.rf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rf-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.rf-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.rf-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.rf-btn--primary {
+  width: 100%;
+  background: var(--brand);
+  color: #fff;
+}
+
+.rf-btn--primary:hover:not(:disabled) {
+  background: var(--brand-mid);
+  box-shadow: 0 4px 12px rgba(12, 74, 62, 0.25);
+}
+
+.rf-btn--secondary {
+  background: var(--mist);
+  color: var(--brand);
+  border: 1px solid rgba(43, 182, 115, 0.25);
+}
+
+.rf-btn--secondary:hover:not(:disabled) {
+  background: #d4ede2;
+}
+
+/* ——— Alert messages ——— */
+.rf-alert {
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.rf-alert--success {
+  background: rgba(43, 182, 115, 0.1);
+  color: #0e6b3a;
+  border: 1px solid rgba(43, 182, 115, 0.25);
+}
+
+.rf-alert--error {
+  background: rgba(192, 57, 43, 0.08);
+  color: #922b21;
+  border: 1px solid rgba(192, 57, 43, 0.18);
+}
+
+/* ——— Spinner (report) ——— */
+.rf-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(12, 74, 62, 0.2);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.rf-btn--primary .rf-spinner {
+  border-color: rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ——— Responsive (tablet) ——— */
+@media (min-width: 768px) {
+  .report-card {
+    padding: 2.5rem;
+  }
+}
+
+/* ——— Responsive (desktop) ——— */
+@media (min-width: 1024px) {
+  .report-card {
+    padding: 3rem;
+  }
+}
+
+/* ——— Location Picker (Leaflet map) ——— */
+.lp-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.lp-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.lp-toolbar__label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.lp-toolbar__btn {
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  min-height: 40px;
+}
+
+.lp-map-container {
+  width: 100%;
+  height: 280px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid var(--line);
+  transition: border-color 0.2s ease;
+}
+
+.lp-map-container:hover {
+  border-color: var(--brand-mid);
+}
+
+/* Override Leaflet z-index so it doesn't cover the topbar */
+.lp-map-container .leaflet-pane {
+  z-index: 1;
+}
+
+.lp-map-container .leaflet-top,
+.lp-map-container .leaflet-bottom {
+  z-index: 2;
+}
+
+.lp-coords {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.lp-coords span {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  background: var(--mist);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.lp-hint {
+  margin: 0.45rem 0 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .lp-map-container {
+    height: 340px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lp-map-container {
+    height: 380px;
+  }
+}
+
+/* ——— Image Upload ——— */
+.rf-images {
+  margin-bottom: 1.75rem;
+}
+
+.rf-images__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.rf-images__input {
+  display: none;
+}
+
+.rf-images__dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 110px;
+  padding: 1.25rem;
+  border: 2px dashed var(--line);
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, rgba(43, 182, 115, 0.03) 0%, rgba(12, 74, 62, 0.02) 100%);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.rf-images__dropzone:hover,
+.rf-images__dropzone:focus-visible {
+  border-color: var(--brand-mid);
+  background:
+    linear-gradient(135deg, rgba(43, 182, 115, 0.07) 0%, rgba(12, 74, 62, 0.04) 100%);
+  outline: none;
+}
+
+.rf-images__icon {
+  font-size: 1.75rem;
+}
+
+.rf-images__text {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--brand);
+}
+
+.rf-images__hint {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+/* Preview thumbnails */
+.rf-images__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.rf-images__thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.rf-images__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rf-images__remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(14, 31, 26, 0.7);
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+/* ——— Auth Pages ——— */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 2rem 1rem;
+}
+
+.auth-card {
+  background: #fff;
+  width: 100%;
+  max-width: 440px;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(12, 74, 62, 0.08);
+  border: 1px solid var(--line);
+}
+
+.auth-card__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-card__title {
+  font-family: "Fraunces", serif;
+  font-size: 2rem;
+  color: var(--brand);
+  margin-bottom: 0.5rem;
+}
+
+.auth-card__subtitle {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.auth-btn {
+  width: 100%;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.auth-footer a {
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.auth-footer a:hover {
+  color: var(--leaf);
+}
+
+/* ——— My Reports Page ——— */
+.my-reports-page {
+  padding: 3rem 1rem;
+}
+
+.my-reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.loading-text {
+  text-align: center;
+  padding: 3rem;
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px dashed var(--line);
+}
+
+.empty-state__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  font-family: "Fraunces", serif;
+  font-size: 1.5rem;
+  color: var(--brand);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .reports-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .reports-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.report-list-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+.report-list-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.report-list-card__date {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.report-list-card__type {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--brand);
+  margin: 0 0 0.5rem;
+}
+
+.report-list-card__district {
+  font-size: 0.9rem;
+  color: var(--ink);
+  margin: 0 0 0.5rem;
+  font-weight: 500;
+}
+
+.report-list-card__desc {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin: 0 0 1rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.report-list-card__images {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.report-list-card__thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.report-list-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge--pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.badge--acknowledged {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.badge--resolved {
+  background: #d4edda;
+  color: #155724;
+}
