@@ -1,12 +1,19 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useApp } from "../context/AppContext.jsx";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 function Header() {
   const [open, setOpen] = useState(false);
-  const { user, logout } = useApp();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
   const onHome = location.pathname === "/";
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+    setOpen(false);
+  };
 
   return (
     <header className={`site-header${onHome ? "" : " site-header--solid"}`}>
@@ -43,29 +50,25 @@ function Header() {
           </Link>
         )}
 
+        {user?.role === "municipality" && (
+          <Link to="/dashboard" onClick={() => setOpen(false)}>
+            Dashboard
+          </Link>
+        )}
+
         {user ? (
           <>
-            <span className="nav-user">{user.name}</span>
-            <button
-              type="button"
-              className="nav-cta"
-              onClick={() => {
-                setOpen(false);
-                logout();
-              }}
-            >
-              Log out
+            <Link to="/my-reports" onClick={() => setOpen(false)}>
+              My Reports
+            </Link>
+            <button type="button" className="nav-cta" onClick={handleLogout}>
+              Logout
             </button>
           </>
         ) : (
-          <>
-            <Link to="/login" onClick={() => setOpen(false)}>
-              Log in
-            </Link>
-            <Link to="/register" className="nav-cta" onClick={() => setOpen(false)}>
-              Register
-            </Link>
-          </>
+          <Link to="/login" className="nav-cta" onClick={() => setOpen(false)}>
+            Sign In
+          </Link>
         )}
       </nav>
     </header>

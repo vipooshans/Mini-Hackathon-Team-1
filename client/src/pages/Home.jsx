@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
-import { useApp } from "../context/AppContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const FEATURES = [
   {
@@ -30,7 +30,7 @@ const FEATURES = [
 ];
 
 function Home() {
-  const { user } = useApp();
+  const { user } = useAuth();
 
   return (
     <>
@@ -56,15 +56,9 @@ function Home() {
             Lanka cleaner—from one photo to a resolved pickup.
           </p>
           <div className="hero-actions">
-            {user ? (
-              <a className="btn btn-primary" href="#join">
-                Continue as {user.name.split(" ")[0]}
-              </a>
-            ) : (
-              <Link className="btn btn-primary" to="/register">
-                Create free account
-              </Link>
-            )}
+            <Link className="btn btn-primary" to="/report">
+              Start a report
+            </Link>
             <a className="btn btn-ghost" href="#features">
               See how it works
             </a>
