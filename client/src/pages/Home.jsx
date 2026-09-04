@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 
 const FEATURES = [
@@ -52,9 +53,9 @@ function Home() {
             Lanka cleaner—from one photo to a resolved pickup.
           </p>
           <div className="hero-actions">
-            <a className="btn btn-primary" href="#join">
+            <Link className="btn btn-primary" to="/report">
               Start a report
-            </a>
+            </Link>
             <a className="btn btn-ghost" href="#features">
               See how it works
             </a>

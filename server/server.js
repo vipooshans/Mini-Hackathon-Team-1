@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import healthRoutes from "./routes/healthRoutes.js";
+import reportRoutes from "./routes/report/reportRoutes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -17,12 +18,27 @@ app.use(
 );
 app.use(express.json());
 
+// Serve uploaded report images as static files
+app.use("/uploads", express.static("uploads"));
+
+// --- Routes ---
+// Existing scaffold routes
 app.use("/api/health", healthRoutes);
 
+// Report feature routes (owned by this feature branch)
+app.use("/api/reports", reportRoutes);
+
+// Teammates: mount your feature routes here, BEFORE errorHandler.
+// Create a subfolder per feature (e.g., routes/schedule/scheduleRoutes.js).
+// Example:
+//   import scheduleRoutes from "./routes/schedule/scheduleRoutes.js";
+//   app.use("/api/schedules", scheduleRoutes);
+
 app.get("/", (_req, res) => {
-  res.json({ message: "Mini Hackathon Team 1 API" });
+  res.json({ message: "CleanLanka API — Sri Lankan Waste Management Platform" });
 });
 
+// Error handler — must be mounted LAST
 app.use(errorHandler);
 
 const start = async () => {
@@ -33,3 +49,4 @@ const start = async () => {
 };
 
 start();
+

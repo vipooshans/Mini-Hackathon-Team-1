@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 
 export const connectDB = async () => {
-  const uri = process.env.MONGODB_URI;
+  // Assumption: env var is MONGO_URI per project spec (not MONGODB_URI from scaffold)
+  const uri = process.env.MONGO_URI;
 
   if (!uri) {
-    console.error("MONGODB_URI is not set");
+    console.error("MONGO_URI is not set in .env");
     process.exit(1);
   }
 
