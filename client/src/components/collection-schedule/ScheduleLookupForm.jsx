@@ -1,50 +1,59 @@
 import { useState } from "react";
-import { getDistricts, municipalities } from "../../services/collection-schedule/scheduleData.js";
+import { getAreas, getDistricts, municipalities } from "../../services/collection-schedule/locationOptions.js";
 
-function ScheduleLookupForm({ onLookup }) {
+function ScheduleLookupForm({ loading, onLookup, onLocationChange }) {
   const [municipality, setMunicipality] = useState("");
   const [district, setDistrict] = useState("");
+  const [area, setArea] = useState("");
   const [message, setMessage] = useState("");
   const districts = getDistricts(municipality);
+  const areas = getAreas(municipality, district);
 
   function handleMunicipalityChange(event) {
     setMunicipality(event.target.value);
     setDistrict("");
+    setArea("");
     setMessage("");
+    onLocationChange();
+  }
+
+  function handleDistrictChange(event) {
+    setDistrict(event.target.value);
+    setArea("");
+    setMessage("");
+    onLocationChange();
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (!municipality || !district) {
-      setMessage("Select your municipal council and area to continue.");
-      return;
-    }
-
+    if (!municipality) return setMessage("Please select your municipal council.");
+    if (!district) return setMessage("Please select your district.");
+    if (!area) return setMessage("Please select your area.");
     setMessage("");
-    onLookup(municipality, district);
+    onLookup({ municipality, district, area });
   }
 
   return (
     <form className="lookup-form" onSubmit={handleSubmit} noValidate>
       <label htmlFor="municipality">Municipal council</label>
+      <label htmlFor="district">District</label>
+      <label htmlFor="area">Area or ward</label>
       <select id="municipality" value={municipality} onChange={handleMunicipalityChange}>
         <option value="">Select your council</option>
         {municipalities.map((name) => <option key={name} value={name}>{name}</option>)}
       </select>
-
-      <label htmlFor="district">Area or ward</label>
-      <select
-        id="district"
-        value={district}
-        onChange={(event) => setDistrict(event.target.value)}
-        disabled={!municipality}
-      >
-        <option value="">{municipality ? "Select your area" : "Choose a council first"}</option>
+      <select id="district" value={district} onChange={handleDistrictChange} disabled={!municipality}>
+        <option value="">{municipality ? "Select your district" : "Choose a council first"}</option>
         {districts.map((name) => <option key={name} value={name}>{name}</option>)}
       </select>
-
+      <select id="area" value={area} onChange={(event) => setArea(event.target.value)} disabled={!district}>
+        <option value="">{district ? "Select your area" : "Choose a district first"}</option>
+        {areas.map((name) => <option key={name} value={name}>{name}</option>)}
+      </select>
       {message && <p className="form-message" role="alert">{message}</p>}
-      <button className="primary-button" type="submit">Find my next pickup <span aria-hidden="true">→</span></button>
+      <button className="primary-button" type="submit" disabled={loading}>
+        {loading ? "Finding schedule..." : "Find my next pickup ->"}
+      </button>
     </form>
   );
 }

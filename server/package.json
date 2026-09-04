@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed:collection-schedules": "node scripts/seedCollectionSchedules.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

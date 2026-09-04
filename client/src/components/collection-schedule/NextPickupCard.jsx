@@ -8,16 +8,18 @@ function NextPickupCard({ schedule, nextPickup }) {
   return (
     <section className="pickup-card" aria-live="polite">
       <div className="pickup-card-top">
-        <span className="eyebrow">Your next collection</span>
-        <span className="status-pill"><span aria-hidden="true">●</span> {schedule.status}</span>
+        <span className="eyebrow">Next collection</span>
+        <span className="status-pill">{schedule.status}</span>
       </div>
       <h2>{date}</h2>
-      <p className="pickup-time">{schedule.time}</p>
+      <p className="pickup-time">{schedule.collectionTime}</p>
       <div className="pickup-details">
-        <div><span>Collection area</span><strong>{schedule.district}</strong></div>
-        <div><span>Accepted waste</span><strong>{schedule.waste}</strong></div>
+        <div><span>Area</span><strong>{schedule.area}</strong></div>
+        <div><span>Municipality</span><strong>{schedule.municipality}</strong></div>
+        <div><span>Collection day</span><strong>{schedule.collectionDay}</strong></div>
+        <div><span>Waste type</span><strong>{schedule.wasteType}</strong></div>
       </div>
-      <p className="collection-note">Please place waste outside before 6:00 AM. Keep recyclables clean and separated.</p>
+      <p className="collection-note">Please place waste outside before the scheduled pickup time.</p>
     </section>
   );
 }
