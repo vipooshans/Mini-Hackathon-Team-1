@@ -1,19 +1,13 @@
 import mongoose from "mongoose";
 
 export const connectDB = async () => {
-<<<<<<< HEAD
-  const uri = process.env.MONGO_URI;
-
-  if (!uri) {
-    console.warn("⚠️  MONGO_URI is not set in .env — server will start but DB features won't work.");
-    return;
-=======
   const uri = process.env.MONGO_URI || process.env.MONGODB_URI;
 
   if (!uri) {
-    console.error("MONGO_URI (or MONGODB_URI) is not set");
-    process.exit(1);
->>>>>>> origin/vipooshan
+    console.warn(
+      "⚠️  MONGO_URI is not set in .env — server will start but DB features won't work."
+    );
+    return;
   }
 
   try {
@@ -23,6 +17,8 @@ export const connectDB = async () => {
     console.log(`✅ MongoDB connected: ${conn.connection.host}`);
   } catch (error) {
     console.error("⚠️  MongoDB connection failed:", error.message);
-    console.warn("⚠️  Server will still start — DB-dependent routes will return errors.");
+    console.warn(
+      "⚠️  Server will still start — DB-dependent routes will return errors."
+    );
   }
 };

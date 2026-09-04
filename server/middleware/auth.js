@@ -1,17 +1,14 @@
 import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
 /**
  * JWT authentication middleware.
  *
  * Extracts token from "Authorization: Bearer <token>" header.
- * On success: attaches req.user = { id, email } and calls next().
+ * On success: attaches req.user = { id, email, role } and calls next().
  * On failure: returns 401 with { message }.
- *
- * Usage in routes:
- *   import { protect } from "../middleware/auth.js";
- *   router.get("/protected", protect, handler);
  */
-export const protect = (req, res, next) => {
+export const protect = async (req, res, next) => {
   const header = req.headers.authorization;
 
   if (!header || !header.startsWith("Bearer ")) {
@@ -24,7 +21,19 @@ export const protect = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { id: decoded.id, email: decoded.email };
+    const user = await User.findById(decoded.id).select("email role");
+
+    if (!user) {
+      return res.status(401).json({
+        message: "User not found. Please log in again.",
+      });
+    }
+
+    req.user = {
+      id: user._id.toString(),
+      email: user.email,
+      role: user.role || decoded.role || "citizen",
+    };
     next();
   } catch {
     return res.status(401).json({
@@ -36,11 +45,8 @@ export const protect = (req, res, next) => {
 /**
  * Optional auth middleware — attaches req.user if token is present,
  * but does NOT reject the request if missing.
- *
- * Use this for routes where auth is optional (e.g., creating a report
- * that can be anonymous or linked to a user).
  */
-export const optionalAuth = (req, _res, next) => {
+export const optionalAuth = async (req, _res, next) => {
   const header = req.headers.authorization;
 
   if (!header || !header.startsWith("Bearer ")) {
@@ -51,10 +57,32 @@ export const optionalAuth = (req, _res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { id: decoded.id, email: decoded.email };
+    const user = await User.findById(decoded.id).select("email role");
+    if (user) {
+      req.user = {
+        id: user._id.toString(),
+        email: user.email,
+        role: user.role || decoded.role || "citizen",
+      };
+    }
   } catch {
     // Token invalid — treat as anonymous, don't reject
   }
 
   next();
 };
+
+/**
+ * Restrict route to one or more roles.
+ * Usage: protect, authorize("municipality")
+ */
+export const authorize =
+  (...roles) =>
+  (req, res, next) => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      return res.status(403).json({
+        message: "Not authorized to perform this action.",
+      });
+    }
+    next();
+  };

@@ -1611,3 +1611,74 @@ button {
   background: #d4edda;
   color: #155724;
 }
+
+/* ——— Municipal Dashboard ——— */
+.dashboard-page {
+  padding: 3rem 1rem;
+}
+
+.dashboard-subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  max-width: 36rem;
+}
+
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .dashboard-metrics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.dashboard-metric {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.dashboard-metric__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.dashboard-metric__value {
+  font-family: "Fraunces", serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--brand);
+  line-height: 1.1;
+}
+
+.dashboard-metric__value--text {
+  font-size: 1.35rem;
+}
+
+.dashboard-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.dashboard-resolved-note {
+  font-size: 0.85rem;
+  color: #155724;
+  font-weight: 600;
+}
+

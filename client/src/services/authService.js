@@ -2,9 +2,16 @@ import { get, post } from "./api.js";
 
 /**
  * Register a new user.
+ * @param {string|object} nameOrPayload
+ * @param {string} [email]
+ * @param {string} [password]
  */
-export async function register(name, email, password) {
-  return post("/auth/register", { name, email, password });
+export async function register(nameOrPayload, email, password) {
+  const body =
+    typeof nameOrPayload === "object"
+      ? nameOrPayload
+      : { name: nameOrPayload, email, password };
+  return post("/auth/register", body);
 }
 
 /**

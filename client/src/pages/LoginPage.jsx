@@ -28,7 +28,7 @@ function LoginPage() {
     try {
       const data = await loginService(formData.email, formData.password);
       login(data.token, data.user);
-      navigate("/my-reports");
+      navigate(data.user.role === "municipality" ? "/dashboard" : "/my-reports");
     } catch (err) {
       setStatus("error");
       setErrorMsg(err.message || "Login failed. Please try again.");

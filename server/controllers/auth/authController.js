@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../../models/User.js";
+import User, { ROLES } from "../../models/User.js";
 
 /**
  * Generate a JWT token for a user.
@@ -7,10 +7,17 @@ import User from "../../models/User.js";
  */
 const generateToken = (user) =>
   jwt.sign(
-    { id: user._id, email: user.email },
+    { id: user._id, email: user.email, role: user.role },
     process.env.JWT_SECRET,
     { expiresIn: "7d" }
   );
+
+const toUserPayload = (user) => ({
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  role: user.role || "citizen",
+});
 
 /**
  * register — POST /api/auth/register
@@ -18,7 +25,7 @@ const generateToken = (user) =>
  */
 export const register = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role, phone, district } = req.body;
 
     // Validate required fields
     if (!name || !email || !password) {
@@ -33,6 +40,8 @@ export const register = async (req, res, next) => {
       });
     }
 
+    const selectedRole = ROLES.includes(role) ? role : "citizen";
+
     // Check if email already exists
     const existing = await User.findOne({ email: email.toLowerCase() });
     if (existing) {
@@ -41,15 +50,18 @@ export const register = async (req, res, next) => {
       });
     }
 
-    const user = await User.create({ name, email, password });
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: selectedRole,
+      phone: phone || "",
+      district: district || "",
+    });
 
     res.status(201).json({
       token: generateToken(user),
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
+      user: toUserPayload(user),
     });
   } catch (error) {
     next(error);
@@ -90,11 +102,7 @@ export const login = async (req, res, next) => {
 
     res.json({
       token: generateToken(user),
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
+      user: toUserPayload(user),
     });
   } catch (error) {
     next(error);
@@ -116,6 +124,7 @@ export const getProfile = async (req, res, next) => {
       id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role || "citizen",
       createdAt: user.createdAt,
     });
   } catch (error) {
