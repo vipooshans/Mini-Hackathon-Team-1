@@ -3,7 +3,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import healthRoutes from "./routes/healthRoutes.js";
+<<<<<<< HEAD
 import collectionScheduleRoutes from "./routes/collection-schedule/collectionScheduleRoutes.js";
+=======
+import authRoutes from "./routes/authRoutes.js";
+>>>>>>> origin/main
 import { errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -19,10 +23,14 @@ app.use(
 app.use(express.json());
 
 app.use("/api/health", healthRoutes);
+<<<<<<< HEAD
 app.use("/api/collection-schedules", collectionScheduleRoutes);
+=======
+app.use("/api/auth", authRoutes);
+>>>>>>> origin/main
 
 app.get("/", (_req, res) => {
-  res.json({ message: "Mini Hackathon Team 1 API" });
+  res.json({ message: "CleanLanka API" });
 });
 
 app.use(errorHandler);
