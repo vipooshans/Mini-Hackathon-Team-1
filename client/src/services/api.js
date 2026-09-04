@@ -16,8 +16,11 @@ const API_BASE = "/api";
  * @param {string} path — e.g. "/reports"
  * @returns {Promise<any>} parsed JSON body
  */
-export async function get(path) {
-  const response = await fetch(`${API_BASE}${path}`);
+export async function get(path, token = null) {
+  const headers = {};
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  const response = await fetch(`${API_BASE}${path}`, { headers });
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
     throw new Error(body.message || `GET ${path} failed (${response.status})`);
@@ -31,10 +34,13 @@ export async function get(path) {
  * @param {object} data — JSON body
  * @returns {Promise<any>} parsed JSON body
  */
-export async function post(path, data) {
+export async function post(path, data, token = null) {
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers.Authorization = `Bearer ${token}`;
+
   const response = await fetch(`${API_BASE}${path}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify(data),
   });
   if (!response.ok) {
@@ -51,9 +57,13 @@ export async function post(path, data) {
  * @param {FormData} formData
  * @returns {Promise<any>} parsed JSON body
  */
-export async function postForm(path, formData) {
+export async function postForm(path, formData, token = null) {
+  const headers = {};
+  if (token) headers.Authorization = `Bearer ${token}`;
+
   const response = await fetch(`${API_BASE}${path}`, {
     method: "POST",
+    headers,
     body: formData,
   });
   if (!response.ok) {

@@ -3,11 +3,18 @@ import { Schema, model } from "mongoose";
 /**
  * Report schema — data contract for the "Report a Waste Issue" feature.
  *
+ * The `user` field is optional — anonymous reports are allowed.
+ * When a logged-in user submits a report, their user ID is attached
+ * so they can track it in "My Reports".
+ *
  * Teammates: do NOT modify this schema without coordinating with the team.
- * The frontend form, validation middleware, and controller all depend on
- * these exact field names and enum values.
  */
 const reportSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: false, // Anonymous reports allowed
+  },
   district: {
     type: String,
     required: true,

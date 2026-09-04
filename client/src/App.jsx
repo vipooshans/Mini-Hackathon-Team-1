@@ -1,6 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import ReportPage from "./pages/ReportPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
+import MyReportsPage from "./pages/MyReportsPage.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 /**
  * App — root component for CleanLanka.
@@ -19,10 +23,14 @@ import ReportPage from "./pages/ReportPage.jsx";
  */
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/report" element={<ReportPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/my-reports" element={<MyReportsPage />} />
 
         {/* Teammate placeholder routes — replace with your page components */}
         <Route
@@ -71,8 +79,9 @@ function App() {
             </main>
           }
         />
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

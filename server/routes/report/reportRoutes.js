@@ -1,20 +1,28 @@
 import { Router } from "express";
 import { upload } from "../../middleware/report/upload.js";
 import { validateReport } from "../../middleware/report/validateReport.js";
+import { optionalAuth, protect } from "../../middleware/auth.js";
 import {
   createReport,
   getReports,
+  getMyReports,
 } from "../../controllers/report/reportController.js";
 
 const router = Router();
 
-// POST /api/reports — create a new waste report
-// 1. multer parses multipart/form-data (up to 3 images)
-// 2. validateReport checks required fields
-// 3. createReport saves to MongoDB
-router.post("/", upload.array("images", 3), validateReport, createReport);
+// GET /api/reports/mine — get logged-in user's reports
+router.get("/mine", protect, getMyReports);
 
-// GET /api/reports — list all waste reports (newest first)
+// POST /api/reports — create report (optionalAuth allows linking to user if logged in)
+router.post(
+  "/",
+  optionalAuth,
+  upload.array("images", 3),
+  validateReport,
+  createReport
+);
+
+// GET /api/reports — public list
 router.get("/", getReports);
 
 export default router;

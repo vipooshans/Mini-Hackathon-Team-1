@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { validateReportForm } from "../../utils/validateReportForm.js";
 import { createReport } from "../../services/reportService.js";
 import LocationPicker from "./LocationPicker.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 /**
  * Sri Lankan districts — all 25 administrative districts.
@@ -35,6 +36,8 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
  * Styled with rf-* classes matching the Fraunces/Outfit design system.
  */
 function ReportForm() {
+  const { token } = useAuth();
+  
   const [formData, setFormData] = useState({
     district: "",
     wasteType: "",
@@ -134,7 +137,7 @@ function ReportForm() {
     setSubmitStatus("submitting");
 
     try {
-      await createReport(fd);
+      await createReport(fd, token);
       setSubmitStatus("success");
       setFormData({ district: "", wasteType: "", description: "", address: "" });
       setMapCoords(null);

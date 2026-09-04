@@ -1,8 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+    setOpen(false);
+  };
 
   return (
     <header className="site-header">
@@ -30,9 +39,21 @@ function Header() {
         <a href="#who" onClick={() => setOpen(false)}>
           Who it serves
         </a>
-        <a href="#join" className="nav-cta" onClick={() => setOpen(false)}>
-          Get started
-        </a>
+        
+        {user ? (
+          <>
+            <Link to="/my-reports" onClick={() => setOpen(false)}>
+              My Reports
+            </Link>
+            <button className="nav-cta" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link to="/login" className="nav-cta" onClick={() => setOpen(false)}>
+            Sign In
+          </Link>
+        )}
       </nav>
     </header>
   );
