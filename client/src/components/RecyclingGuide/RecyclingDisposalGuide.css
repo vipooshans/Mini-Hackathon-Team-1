@@ -17,12 +17,28 @@
 .disposal-search input { flex: 1; min-width: 0; padding: .8rem 1rem; border: 1px solid #a7c7b4; border-radius: .5rem; font: inherit; }
 .disposal-search button, .disposal-result__action { padding: .8rem 1.05rem; color: #fff; background: #24734e; border: 0; border-radius: .5rem; font: inherit; font-weight: 700; cursor: pointer; }
 .disposal-search button:hover, .disposal-result__action:hover { background: #185537; }
+.disposal-search button:disabled, .disposal-search__browse:disabled { cursor: wait; opacity: .65; }
+.disposal-search__hint, .disposal-search__error { margin: .5rem 0; font-size: .9rem; }
+.disposal-search__hint { color: #4a6357; }
+.disposal-search__error, .disposal-results__error { color: #9b1c1c; }
+.disposal-search__browse { padding: 0; color: #185537; background: transparent; border: 0; font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
+
+.category-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+.category-filters__button { padding: .5rem .75rem; color: #294939; background: #fff; border: 1px solid #a7c7b4; border-radius: 99px; font: inherit; cursor: pointer; }
+.category-filters__button--active { color: #fff; background: #24734e; border-color: #24734e; }
 
 .disposal-results { display: grid; gap: 1rem; margin-top: 1.5rem; }
-.disposal-result { padding: 1.2rem; background: #fff; border: 1px solid #d4e6d9; border-radius: .75rem; }
+.disposal-results__summary { display: flex; justify-content: space-between; gap: 1rem; color: #466154; font-size: .95rem; }
+.disposal-results__summary p { margin: 0; }
+.disposal-results__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.disposal-result { display: flex; flex-direction: column; padding: 1.2rem; background: #fff; border: 1px solid #d4e6d9; border-radius: .75rem; }
+.disposal-result__heading { display: flex; gap: .8rem; align-items: center; }
+.disposal-result__icon { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; background: #e5f4e9; border-radius: 50%; font-size: 1.3rem; }
 .disposal-result h3 { margin: .4rem 0; }
 .disposal-result p { margin: 0 0 1rem; color: #466154; }
+.disposal-result__preparation { font-size: .92rem; }
 .disposal-result__category { color: #24734e; font-size: .85rem; font-weight: 700; }
+.disposal-result__action { align-self: flex-start; margin-top: auto; }
 .disposal-results__empty { margin: 0; padding: 1rem; background: #fff; border-radius: .5rem; }
 
 @media (max-width: 34rem) {
