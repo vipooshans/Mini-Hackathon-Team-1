@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
+import { useApp } from "../context/AppContext.jsx";
 
 const FEATURES = [
   {
@@ -28,6 +30,8 @@ const FEATURES = [
 ];
 
 function Home() {
+  const { user } = useApp();
+
   return (
     <>
       <Header />
@@ -52,9 +56,15 @@ function Home() {
             Lanka cleaner—from one photo to a resolved pickup.
           </p>
           <div className="hero-actions">
-            <a className="btn btn-primary" href="#join">
-              Start a report
-            </a>
+            {user ? (
+              <a className="btn btn-primary" href="#join">
+                Continue as {user.name.split(" ")[0]}
+              </a>
+            ) : (
+              <Link className="btn btn-primary" to="/register">
+                Create free account
+              </Link>
+            )}
             <a className="btn btn-ghost" href="#features">
               See how it works
             </a>
@@ -195,12 +205,20 @@ function Home() {
             <span>English</span>
           </div>
           <div className="cta-actions">
-            <a className="btn btn-dark" href="#features">
-              Explore the platform
-            </a>
-            <a className="btn btn-outline-dark" href="mailto:hello@cleanlanka.lk">
-              Partner with us
-            </a>
+            {user ? (
+              <a className="btn btn-dark" href="#features">
+                Explore the platform
+              </a>
+            ) : (
+              <>
+                <Link className="btn btn-dark" to="/register">
+                  Create account
+                </Link>
+                <Link className="btn btn-outline-dark" to="/login">
+                  Log in
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
