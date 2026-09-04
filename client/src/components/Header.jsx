@@ -1,7 +1,11 @@
 function Header() {
   return (
-    <header>
-      <strong>Mini Hackathon Team 1</strong>
+    <header className="site-header">
+      <a className="brand" href="/" aria-label="CleanLanka home">
+        <span className="brand-mark" aria-hidden="true">♻</span>
+        <span>CleanLanka</span>
+      </a>
+      <span className="header-label">Collection schedule</span>
     </header>
   );
 }

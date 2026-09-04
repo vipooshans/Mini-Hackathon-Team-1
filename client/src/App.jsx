@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home.jsx";
+import CollectionScheduleLookup from "./pages/collection-schedule/CollectionScheduleLookup.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<CollectionScheduleLookup />} />
       </Routes>
     </BrowserRouter>
   );
