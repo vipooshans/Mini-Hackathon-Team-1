@@ -3,11 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { register as registerService } from "../services/authService.js";
 
+const ROLES = [
+  { value: "citizen", label: "Citizen" },
+  { value: "municipality", label: "Municipality" },
+  { value: "recycler", label: "Recycler" },
+];
+
 function RegisterPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "citizen",
+  });
   const [status, setStatus] = useState("idle"); // idle | loading | error
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -26,9 +37,9 @@ function RegisterPage() {
 
     setStatus("loading");
     try {
-      const data = await registerService(formData.name, formData.email, formData.password);
+      const data = await registerService(formData);
       login(data.token, data.user);
-      navigate("/my-reports");
+      navigate(data.user.role === "municipality" ? "/dashboard" : "/my-reports");
     } catch (err) {
       setStatus("error");
       setErrorMsg(err.message || "Registration failed. Please try again.");
@@ -41,7 +52,9 @@ function RegisterPage() {
         <div className="auth-card">
           <div className="auth-card__header">
             <h1 className="auth-card__title">Create an account</h1>
-            <p className="auth-card__subtitle">Join CleanLanka to track and manage your reports.</p>
+            <p className="auth-card__subtitle">
+              Join CleanLanka to track and manage your reports.
+            </p>
           </div>
 
           {status === "error" && (
@@ -53,7 +66,9 @@ function RegisterPage() {
 
           <form onSubmit={handleSubmit} noValidate>
             <div className="rf-group">
-              <label className="rf-label" htmlFor="name">Name</label>
+              <label className="rf-label" htmlFor="name">
+                Name
+              </label>
               <input
                 className="rf-input"
                 type="text"
@@ -66,7 +81,9 @@ function RegisterPage() {
             </div>
 
             <div className="rf-group">
-              <label className="rf-label" htmlFor="email">Email</label>
+              <label className="rf-label" htmlFor="email">
+                Email
+              </label>
               <input
                 className="rf-input"
                 type="email"
@@ -79,7 +96,28 @@ function RegisterPage() {
             </div>
 
             <div className="rf-group">
-              <label className="rf-label" htmlFor="password">Password</label>
+              <label className="rf-label" htmlFor="role">
+                Account type
+              </label>
+              <select
+                className="rf-input"
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+              >
+                {ROLES.map((r) => (
+                  <option key={r.value} value={r.value}>
+                    {r.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="rf-group">
+              <label className="rf-label" htmlFor="password">
+                Password
+              </label>
               <input
                 className="rf-input"
                 type="password"

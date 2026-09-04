@@ -70,3 +70,33 @@ export const getMyReports = async (req, res, next) => {
     next(error);
   }
 };
+
+const ALLOWED_STATUSES = ["Pending", "Acknowledged", "Resolved"];
+
+/**
+ * updateReportStatus — PATCH /api/reports/:id/status
+ * Municipality admins mark a report as Acknowledged or Resolved.
+ */
+export const updateReportStatus = async (req, res, next) => {
+  try {
+    const { status } = req.body;
+
+    if (!status || !ALLOWED_STATUSES.includes(status)) {
+      return res.status(400).json({
+        message: `Status must be one of: ${ALLOWED_STATUSES.join(", ")}.`,
+      });
+    }
+
+    const report = await Report.findById(req.params.id);
+    if (!report) {
+      return res.status(404).json({ message: "Report not found." });
+    }
+
+    report.status = status;
+    await report.save();
+
+    res.json(report);
+  } catch (error) {
+    next(error);
+  }
+};

@@ -1,4 +1,4 @@
-import { get, postForm } from "./api.js";
+import { get, postForm, patch } from "./api.js";
 
 /**
  * Create a new waste report with optional images.
@@ -26,4 +26,15 @@ export async function getReports() {
  */
 export async function getMyReports(token) {
   return get("/reports/mine", token);
+}
+
+/**
+ * Update a report's status (municipality only).
+ * @param {string} id - report id
+ * @param {string} status - "Pending" | "Acknowledged" | "Resolved"
+ * @param {string} token - JWT token
+ * @returns {Promise<object>} updated report
+ */
+export async function updateReportStatus(id, status, token) {
+  return patch(`/reports/${id}/status`, { status }, token);
 }
