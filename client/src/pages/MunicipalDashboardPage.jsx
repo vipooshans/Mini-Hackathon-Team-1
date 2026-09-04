@@ -133,14 +133,22 @@ function MunicipalDashboardPage() {
               Live waste reports — acknowledge and resolve issues for your council.
             </p>
           </div>
-          <button
-            type="button"
-            className="btn btn-primary btn-sm"
-            onClick={loadReports}
-            disabled={fetchStatus === "loading"}
-          >
-            Refresh
-          </button>
+          <div className="dashboard-card-actions">
+            <Link
+              className="btn btn-ghost btn-sm"
+              to="/recycler"
+            >
+              Recycling Dashboard
+            </Link>
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              onClick={loadReports}
+              disabled={fetchStatus === "loading"}
+            >
+              Refresh
+            </button>
+          </div>
         </div>
 
         <MunicipalityAdminSubnav />
