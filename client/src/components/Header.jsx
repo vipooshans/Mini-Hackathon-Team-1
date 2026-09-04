@@ -9,14 +9,6 @@ function Header() {
   const onHome = location.pathname === "/";
 
   return (
-<<<<<<< HEAD
-    <header className="site-header">
-      <a className="brand" href="/" aria-label="CleanLanka home">
-        <span className="brand-mark" aria-hidden="true">♻</span>
-        <span>CleanLanka</span>
-      </a>
-      <span className="header-label">Collection schedule</span>
-=======
     <header className={`site-header${onHome ? "" : " site-header--solid"}`}>
       <Link to="/" className="site-logo" onClick={() => setOpen(false)}>
         CleanLanka
@@ -76,7 +68,6 @@ function Header() {
           </>
         )}
       </nav>
->>>>>>> origin/main
     </header>
   );
 }
