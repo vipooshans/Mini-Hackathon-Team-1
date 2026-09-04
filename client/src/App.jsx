@@ -1,10 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AppProvider } from "./context/AppContext.jsx";
 import Home from "./pages/Home.jsx";
+<<<<<<< HEAD
 import ReportPage from "./pages/ReportPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import MyReportsPage from "./pages/MyReportsPage.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+=======
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+>>>>>>> origin/vipooshan
 
 /**
  * App — root component for CleanLanka.
@@ -23,6 +29,7 @@ import { AuthProvider } from "./context/AuthContext.jsx";
  */
 function App() {
   return (
+<<<<<<< HEAD
     <AuthProvider>
       <BrowserRouter>
         <Routes>
@@ -82,6 +89,17 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+=======
+    <AppProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+    </AppProvider>
+>>>>>>> origin/vipooshan
   );
 }
 
