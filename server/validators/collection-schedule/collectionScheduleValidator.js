@@ -1,15 +1,33 @@
-function cleanQueryValue(value) {
-  return typeof value === "string" ? value.trim() : "";
+function validateValue(value, fieldName) {
+  if (typeof value !== "string") {
+    return `${fieldName} is required.`;
+  }
+
+  const trimmedValue = value.trim();
+  if (!trimmedValue) return `${fieldName} is required.`;
+  if (trimmedValue.length > 100) return `${fieldName} must be 100 characters or fewer.`;
+
+  return null;
 }
 
 export function validateScheduleLookup(query) {
-  const municipality = cleanQueryValue(query.municipality);
-  const district = cleanQueryValue(query.district);
-  const area = cleanQueryValue(query.area);
+  const fields = [
+    ["municipality", "Municipality"],
+    ["district", "District"],
+    ["area", "Area"],
+  ];
 
-  if (!municipality) return { valid: false, message: "Please select your municipal council." };
-  if (!district) return { valid: false, message: "Please select your district." };
-  if (!area) return { valid: false, message: "Please select your area." };
+  for (const [key, label] of fields) {
+    const message = validateValue(query[key], label);
+    if (message) return { valid: false, message };
+  }
 
-  return { valid: true, value: { municipality, district, area } };
+  return {
+    valid: true,
+    value: {
+      municipality: query.municipality.trim(),
+      district: query.district.trim(),
+      area: query.area.trim(),
+    },
+  };
 }

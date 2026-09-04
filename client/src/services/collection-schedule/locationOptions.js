@@ -1,3 +1,4 @@
+// Demo-only cascading options. "Other area" deliberately has no seeded record.
 export const locationOptions = [
   { municipality: "Jaffna Municipal Council", district: "Jaffna", areas: ["Nallur", "Jaffna Town", "Other area (demo no result)"] },
   { municipality: "Colombo Municipal Council", district: "Colombo", areas: ["Colombo 06", "Other area (demo no result)"] },

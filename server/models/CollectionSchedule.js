@@ -2,17 +2,17 @@ import { Schema, model } from "mongoose";
 
 const collectionScheduleSchema = new Schema(
   {
-    municipality: { type: String, required: true, trim: true },
-    district: { type: String, required: true, trim: true },
-    area: { type: String, required: true, trim: true },
+    municipality: { type: String, required: true, trim: true, maxlength: 100 },
+    district: { type: String, required: true, trim: true, maxlength: 100 },
+    area: { type: String, required: true, trim: true, maxlength: 100 },
     collectionDay: {
       type: String,
       required: true,
       enum: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     },
-    collectionTime: { type: String, required: true, trim: true },
-    wasteType: { type: String, required: true, trim: true },
-    status: { type: String, required: true, enum: ["On schedule", "Delayed", "Rescheduled"], default: "On schedule" },
+    collectionTime: { type: String, required: true, trim: true, maxlength: 100 },
+    wasteType: { type: String, required: true, trim: true, maxlength: 100 },
+    status: { type: String, enum: ["Scheduled", "Delayed", "Cancelled"], default: "Scheduled" },
     active: { type: Boolean, default: true },
   },
   { timestamps: true }

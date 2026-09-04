@@ -6,6 +6,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<CollectionScheduleLookup />} />
+        <Route path="/collection-schedule" element={<CollectionScheduleLookup />} />
       </Routes>
     </BrowserRouter>
   );
