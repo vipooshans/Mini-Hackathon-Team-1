@@ -56,9 +56,19 @@ function Home() {
             Lanka cleaner—from one photo to a resolved pickup.
           </p>
           <div className="hero-actions">
-            <Link className="btn btn-primary" to="/report">
-              Start a report
-            </Link>
+            {user?.role === "municipality" ? (
+              <Link className="btn btn-primary" to="/dashboard">
+                Open dashboard
+              </Link>
+            ) : user?.role === "recycler" ? (
+              <Link className="btn btn-primary" to="/recycler">
+                Open recycling center
+              </Link>
+            ) : (
+              <Link className="btn btn-primary" to="/report">
+                Start a report
+              </Link>
+            )}
             <a className="btn btn-ghost" href="#features">
               See how it works
             </a>

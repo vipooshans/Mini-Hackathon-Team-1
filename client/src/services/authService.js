@@ -1,4 +1,4 @@
-import { get, post } from "./api.js";
+import { get, post, patch } from "./api.js";
 
 /**
  * Register a new user.
@@ -26,4 +26,11 @@ export async function login(email, password) {
  */
 export async function getProfile(token) {
   return get("/auth/profile", token);
+}
+
+/**
+ * Update profile and reminder preferences.
+ */
+export async function updateProfile(data, token) {
+  return patch("/auth/profile", data, token);
 }

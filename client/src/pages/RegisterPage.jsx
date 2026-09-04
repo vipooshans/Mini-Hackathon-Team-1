@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { register as registerService } from "../services/authService.js";
+import { roleHome } from "../utils/roleHome.js";
 
 const ROLES = [
   { value: "citizen", label: "Citizen" },
@@ -39,7 +40,7 @@ function RegisterPage() {
     try {
       const data = await registerService(formData);
       login(data.token, data.user);
-      navigate(data.user.role === "municipality" ? "/dashboard" : "/my-reports");
+      navigate(roleHome(data.user.role));
     } catch (err) {
       setStatus("error");
       setErrorMsg(err.message || "Registration failed. Please try again.");

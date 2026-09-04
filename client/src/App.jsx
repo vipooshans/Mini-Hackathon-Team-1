@@ -5,17 +5,18 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import MyReportsPage from "./pages/MyReportsPage.jsx";
 import MunicipalDashboardPage from "./pages/MunicipalDashboardPage.jsx";
+import SchedulePage from "./pages/SchedulePage.jsx";
+import GuidePage from "./pages/GuidePage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import RecyclerPage from "./pages/RecyclerPage.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 
 /**
  * App — root component for CleanLanka.
  *
- * Routes:
- *   /           → Home (landing page with its own Header)
- *   /report     → ReportPage (Report a Waste Issue)
- *   /schedule   → placeholder (teammate feature)
- *   /guide      → placeholder (teammate feature)
- *   /dashboard  → Municipal Dashboard (P4)
+ * Citizen: /report, /schedule, /guide, /profile, /my-reports, /recycler (request)
+ * Municipality: /dashboard
+ * Recycler: /recycler
  */
 function App() {
   return (
@@ -28,33 +29,10 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/my-reports" element={<MyReportsPage />} />
           <Route path="/dashboard" element={<MunicipalDashboardPage />} />
-
-          <Route
-            path="/schedule"
-            element={
-              <main className="interior-page">
-                <div className="interior-page__inner">
-                  <h1 className="interior-page__title">Collection Schedule</h1>
-                  <p className="interior-page__copy">
-                    Coming soon — this feature is under development.
-                  </p>
-                </div>
-              </main>
-            }
-          />
-          <Route
-            path="/guide"
-            element={
-              <main className="interior-page">
-                <div className="interior-page__inner">
-                  <h1 className="interior-page__title">Disposal Guide</h1>
-                  <p className="interior-page__copy">
-                    Coming soon — this feature is under development.
-                  </p>
-                </div>
-              </main>
-            }
-          />
+          <Route path="/schedule" element={<SchedulePage />} />
+          <Route path="/guide" element={<GuidePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/recycler" element={<RecyclerPage />} />
 
           <Route
             path="*"

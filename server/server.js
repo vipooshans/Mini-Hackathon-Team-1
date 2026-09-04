@@ -5,6 +5,7 @@ import { connectDB } from "./config/db.js";
 import healthRoutes from "./routes/healthRoutes.js";
 import reportRoutes from "./routes/report/reportRoutes.js";
 import authRoutes from "./routes/auth/authRoutes.js";
+import pickupRoutes from "./routes/pickup/pickupRoutes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/pickups", pickupRoutes);
 
 // Teammates: mount your feature routes here, BEFORE errorHandler.
 

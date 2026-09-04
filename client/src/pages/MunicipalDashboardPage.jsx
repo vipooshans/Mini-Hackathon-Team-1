@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import Header from "../components/Header.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { getReports, updateReportStatus } from "../services/reportService.js";
 
@@ -69,19 +70,22 @@ function MunicipalDashboardPage() {
 
   if (user.role !== "municipality") {
     return (
-      <main className="interior-page">
-        <div className="interior-page__inner">
-          <h1 className="interior-page__title">Municipal Dashboard</h1>
-          <p className="interior-page__copy">
-            This panel is for municipality accounts. Sign in with a Municipality
-            role, or{" "}
-            <Link to="/register">register</Link> as Municipality.
-          </p>
-          <Link to="/my-reports" className="btn btn-primary">
-            Go to My Reports
-          </Link>
-        </div>
-      </main>
+      <>
+        <Header />
+        <main className="interior-page">
+          <div className="interior-page__inner">
+            <h1 className="interior-page__title">Municipal Dashboard</h1>
+            <p className="interior-page__copy">
+              This panel is for municipality accounts. Sign in with a Municipality
+              role, or{" "}
+              <Link to="/register">register</Link> as Municipality.
+            </p>
+            <Link to="/my-reports" className="btn btn-primary">
+              Go to My Reports
+            </Link>
+          </div>
+        </main>
+      </>
     );
   }
 
@@ -101,7 +105,9 @@ function MunicipalDashboardPage() {
   };
 
   return (
-    <main className="interior-page dashboard-page">
+    <>
+      <Header />
+      <main className="interior-page dashboard-page">
       <div className="interior-page__inner">
         <div className="my-reports-header">
           <div>
@@ -235,6 +241,7 @@ function MunicipalDashboardPage() {
         )}
       </div>
     </main>
+    </>
   );
 }
 

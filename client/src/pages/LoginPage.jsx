@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { login as loginService } from "../services/authService.js";
+import { roleHome } from "../utils/roleHome.js";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ function LoginPage() {
     try {
       const data = await loginService(formData.email, formData.password);
       login(data.token, data.user);
-      navigate(data.user.role === "municipality" ? "/dashboard" : "/my-reports");
+      navigate(roleHome(data.user.role));
     } catch (err) {
       setStatus("error");
       setErrorMsg(err.message || "Login failed. Please try again.");

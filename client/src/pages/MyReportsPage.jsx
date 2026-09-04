@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import Header from "../components/Header.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { getMyReports } from "../services/reportService.js";
 
@@ -40,7 +41,9 @@ function MyReportsPage() {
   };
 
   return (
-    <main className="interior-page my-reports-page">
+    <>
+      <Header />
+      <main className="interior-page my-reports-page">
       <div className="interior-page__inner">
         <div className="my-reports-header">
           <h1 className="interior-page__title">My Reports</h1>
@@ -99,6 +102,7 @@ function MyReportsPage() {
         )}
       </div>
     </main>
+    </>
   );
 }
 

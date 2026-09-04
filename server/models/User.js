@@ -42,6 +42,16 @@ const userSchema = new Schema({
     trim: true,
     default: "",
   },
+  /** Collection reminder preferences (citizen) */
+  reminderEnabled: {
+    type: Boolean,
+    default: false,
+  },
+  reminderDay: {
+    type: String,
+    trim: true,
+    default: "",
+  },
   createdAt: {
     type: Date,
     default: Date.now,

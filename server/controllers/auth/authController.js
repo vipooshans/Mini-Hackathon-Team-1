@@ -17,6 +17,11 @@ const toUserPayload = (user) => ({
   name: user.name,
   email: user.email,
   role: user.role || "citizen",
+  phone: user.phone || "",
+  district: user.district || "",
+  reminderEnabled: Boolean(user.reminderEnabled),
+  reminderDay: user.reminderDay || "",
+  createdAt: user.createdAt,
 });
 
 /**
@@ -120,13 +125,43 @@ export const getProfile = async (req, res, next) => {
       return res.status(404).json({ message: "User not found." });
     }
 
-    res.json({
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role || "citizen",
-      createdAt: user.createdAt,
-    });
+    res.json(toUserPayload(user));
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * updateProfile — PATCH /api/auth/profile
+ * Updates name, phone, district, and reminder preferences.
+ */
+export const updateProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    const { name, phone, district, reminderEnabled, reminderDay } = req.body;
+
+    if (typeof name === "string" && name.trim()) {
+      user.name = name.trim();
+    }
+    if (typeof phone === "string") {
+      user.phone = phone.trim();
+    }
+    if (typeof district === "string") {
+      user.district = district.trim();
+    }
+    if (typeof reminderEnabled === "boolean") {
+      user.reminderEnabled = reminderEnabled;
+    }
+    if (typeof reminderDay === "string") {
+      user.reminderDay = reminderDay.trim();
+    }
+
+    await user.save();
+    res.json(toUserPayload(user));
   } catch (error) {
     next(error);
   }
