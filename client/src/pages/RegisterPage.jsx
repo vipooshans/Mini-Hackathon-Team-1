@@ -4,12 +4,6 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { register as registerService } from "../services/authService.js";
 import { roleHome } from "../utils/roleHome.js";
 
-const ROLES = [
-  { value: "citizen", label: "Citizen" },
-  { value: "municipality", label: "Municipality" },
-  { value: "recycler", label: "Recycler" },
-];
-
 function RegisterPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -18,7 +12,6 @@ function RegisterPage() {
     name: "",
     email: "",
     password: "",
-    role: "citizen",
   });
   const [status, setStatus] = useState("idle"); // idle | loading | error
   const [errorMsg, setErrorMsg] = useState("");
@@ -38,7 +31,7 @@ function RegisterPage() {
 
     setStatus("loading");
     try {
-      const data = await registerService(formData);
+      const data = await registerService({ ...formData, role: "citizen" });
       login(data.token, data.user);
       navigate(roleHome(data.user.role));
     } catch (err) {
@@ -94,25 +87,6 @@ function RegisterPage() {
                 onChange={handleChange}
                 placeholder="Enter your email"
               />
-            </div>
-
-            <div className="rf-group">
-              <label className="rf-label" htmlFor="role">
-                Account type
-              </label>
-              <select
-                className="rf-input"
-                id="role"
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-              >
-                {ROLES.map((r) => (
-                  <option key={r.value} value={r.value}>
-                    {r.label}
-                  </option>
-                ))}
-              </select>
             </div>
 
             <div className="rf-group">
