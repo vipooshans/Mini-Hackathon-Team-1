@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import healthRoutes from "./routes/healthRoutes.js";
+import collectionScheduleRoutes from "./routes/collection-schedule/collectionScheduleRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
@@ -19,6 +20,7 @@ app.use(
 app.use(express.json());
 
 app.use("/api/health", healthRoutes);
+app.use("/api/collection-schedules", collectionScheduleRoutes);
 app.use("/api/auth", authRoutes);
 
 app.get("/", (_req, res) => {
